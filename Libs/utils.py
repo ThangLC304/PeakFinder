@@ -13,6 +13,13 @@ logger.setLevel(logging.DEBUG)
 
 ## IMPORT DF FROM EXCEL ##
 
+def init_core_folders(project_path):
+    core_folders = ["Log", "Output"]
+    for folder in core_folders:
+        if not os.path.exists(os.path.join(project_path, folder)):
+            os.makedirs(os.path.join(project_path, folder))
+    
+
 def read_clean_excel(excel_path, sheet_name=None):
 
     if sheet_name is None:

@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def PeakFinder(progress_bar,
                yvalues,
                tolerance,

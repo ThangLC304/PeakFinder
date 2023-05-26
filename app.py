@@ -14,8 +14,8 @@ import openpyxl
 import json
 import shutil
 
-from utils import read_clean_excel, draw_plot, make_df, append_df_to_excel
-from findpeaks import *
+from Libs.utils import *
+from Libs.findpeaks import *
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -26,6 +26,10 @@ file_handler = logging.FileHandler('app.log')
 file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
+
+# Create core folders
+root_folder = Path(__file__).parent
+init_core_folders(root_folder)
 
 class Parameters():
     def __init__(self, master, row, text, default_value):
