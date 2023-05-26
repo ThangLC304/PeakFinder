@@ -382,6 +382,7 @@ class App(customtkinter.CTk):
                         processed = True
                     if temp_column == "":
                         startcol = i
+                        logger.info(f"Found empty column at column No.{startcol} reserved putting maxima and minima")
                         break
                 if processed:
                     logger.info(f"Found maxima and minima columns in {self.sheet_name}, skip saving")
