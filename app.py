@@ -376,16 +376,19 @@ class App(customtkinter.CTk):
                 # open self.sheet_name
                 temp_df = read_clean_excel(output_path, sheet_name=self.sheet_name)
                 # if the all "xMaxima", "yMaxima", "xMinima", "yMinima" columns exist, skip
-                temp_count = 0
+                processed = False
                 for i, temp_column in enumerate(temp_df.columns):
-                    if ("maxima" in temp_column.lower()) or ("minima" in temp_column.lower()):
-                        temp_count += 1
-                if temp_count >= 4:
+                    if ("y_maxima" in temp_column.lower()) or ("minima" in temp_column.lower()):
+                        processed = True
+                    if temp_column == "":
+                        startcol = i
+                        break
+                if processed:
                     logger.info(f"Found maxima and minima columns in {self.sheet_name}, skip saving")
                     return
 
             try:
-                append_df_to_excel(output_path, df_maxima, sheet_name=self.sheet_name, index=False, startrow=2, startcol=len(self.columns))
+                append_df_to_excel(output_path, df_maxima, sheet_name=self.sheet_name, index=False, startrow=2, startcol=startcol)
                 logger.info(f"Saved maxima to sheet {self.sheet_name} of {output_path}")
             except Exception as e:
                 print(e)
@@ -393,7 +396,7 @@ class App(customtkinter.CTk):
                 logger.info(e)
 
             try:
-                append_df_to_excel(output_path, df_minima, sheet_name=self.sheet_name, index=False, startrow=2, startcol=len(self.columns)+2)
+                append_df_to_excel(output_path, df_minima, sheet_name=self.sheet_name, index=False, startrow=2, startcol=startcol+2)
                 logger.info(f"Saved minima to sheet {self.sheet_name} of {output_path}")
             # except as e, print e
             except Exception as e:
