@@ -1,0 +1,9 @@
+pandas
+numpy
+matplotlib
+tk
+openpyxl
+tqdm
+shutil
+pathlib
+customtkinter

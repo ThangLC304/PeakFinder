@@ -377,8 +377,8 @@ class App(customtkinter.CTk):
                 temp_df = read_clean_excel(output_path, sheet_name=self.sheet_name)
                 # if the all "xMaxima", "yMaxima", "xMinima", "yMinima" columns exist, skip
                 temp_count = 0
-                for temp_column in temp_df.columns:
-                    if "maxima" or "minima" in temp_column.lower():
+                for i, temp_column in enumerate(temp_df.columns):
+                    if ("maxima" in temp_column.lower()) or ("minima" in temp_column.lower()):
                         temp_count += 1
                 if temp_count >= 4:
                     logger.info(f"Found maxima and minima columns in {self.sheet_name}, skip saving")

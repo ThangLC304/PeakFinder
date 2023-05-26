@@ -78,7 +78,7 @@ def get_coordinates(values, positions):
     cc = [values[positions[i]] for i in range(size)]
     return cc
 
-def make_df(xvalues, yvalues, maxima, minima):
+def make_df(xvalues, yvalues, maxima, minima, threshold=10):
 
     xMaxima = get_coordinates(xvalues, maxima)
     yMaxima = get_coordinates(yvalues, maxima)
@@ -98,6 +98,12 @@ def make_df(xvalues, yvalues, maxima, minima):
     df_min = pd.DataFrame(list(minima_result.items()),columns = ['X_minima', 'Y_minima'])
     df_min['X_minima'] = df_min['X_minima'].astype(int)
     df_min['Y_minima'] = df_min['Y_minima'].astype(float)
+
+    min_threshold = threshold
+    max_threshold = len(yvalues) - threshold - 1
+    # crop the rows of df_max and df_min with x < min_threshold and x > max_threshold
+    df_max = df_max[(df_max['X_maxima'] >= min_threshold) & (df_max['X_maxima'] < max_threshold)]
+    df_min = df_min[(df_min['X_minima'] >= min_threshold) & (df_min['X_minima'] < max_threshold)]
 
     return df_max, df_min
 
